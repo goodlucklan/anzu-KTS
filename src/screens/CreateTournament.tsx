@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
+import { useNavigate } from "react-router";
 type FormData = {
   konamiId: string;
   name: string;
 };
 
 export const CreateTournament = () => {
+  let navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm<FormData>();
   const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
 
   const onSubmit = (form: FormData) => {
     setSubmittedForms((prev) => [...prev, form]);
     reset();
+    navigate("/ListTournament");
   };
 
   return (
