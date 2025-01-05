@@ -10,12 +10,10 @@ type FormData = {
 export const CreateTournament = () => {
   let navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm<FormData>();
-  // const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
   const { submittedForms, addForm }: any = useTournamentStore();
 
   const onSubmit = (form: FormData) => {
     addForm(form);
-    // setSubmittedForms((prev) => [...prev, form]);
     reset();
   };
 
