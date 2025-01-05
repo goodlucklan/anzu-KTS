@@ -1,6 +1,7 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { useTournamentStore } from "../store/globalStore";
+
 type FormData = {
   konamiId: string;
   name: string;
@@ -9,12 +10,13 @@ type FormData = {
 export const CreateTournament = () => {
   let navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm<FormData>();
-  const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
+  // const [submittedForms, setSubmittedForms] = useState<FormData[]>([]);
+  const { submittedForms, addForm }: any = useTournamentStore();
 
   const onSubmit = (form: FormData) => {
-    setSubmittedForms((prev) => [...prev, form]);
+    addForm(form);
+    // setSubmittedForms((prev) => [...prev, form]);
     reset();
-    navigate("/ListTournament");
   };
 
   return (
@@ -69,7 +71,7 @@ export const CreateTournament = () => {
               ? "opacity-50 cursor-not-allowed"
               : "dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           }`}
-          onClick={() => alert(JSON.stringify(submittedForms))}
+          onClick={() => navigate("/ListTournament")}
         >
           Send the Tournament
         </button>

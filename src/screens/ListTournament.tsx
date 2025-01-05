@@ -1,4 +1,8 @@
+import { useTournamentStore } from "../store/globalStore";
+
 export const ListTournament = () => {
+  const { submittedForms }: any = useTournamentStore();
+  console.log("sub", submittedForms);
   return (
     <div className="relative overflow-x-auto bg-zinc-900 h-full w-full">
       <table className="w-full text-sm text-left rtl:text-right text-white dark:text-gray-400">
