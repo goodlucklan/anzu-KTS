@@ -2,7 +2,46 @@ import { useTournamentStore } from "../store/globalStore";
 
 export const ListTournament = () => {
   const { submittedForms }: any = useTournamentStore();
-  console.log("submittedForms", submittedForms);
+
+  // Crear lista de emparejamientos únicos basados en konamiId
+  const pairs = [];
+  const usedIds = new Set();
+
+  // Emparejar jugadores
+  for (let i = 0; i < submittedForms.length; i++) {
+    const player1 = submittedForms[i];
+
+    // Si el jugador ya está emparejado, saltarlo
+    if (usedIds.has(player1.konamiId)) continue;
+
+    let paired = false;
+    for (let j = i + 1; j < submittedForms.length; j++) {
+      const player2 = submittedForms[j];
+
+      // Emparejar si el jugador2 no está ya emparejado
+      if (!usedIds.has(player2.konamiId)) {
+        pairs.push({
+          mesa: pairs.length + 1,
+          player1: player1.name,
+          player2: player2.name,
+        });
+        usedIds.add(player1.konamiId);
+        usedIds.add(player2.konamiId);
+        paired = true;
+        break;
+      }
+    }
+
+    // Si no se encontró pareja, agregar con N/A
+    if (!paired) {
+      pairs.push({
+        mesa: pairs.length + 1,
+        player1: player1.name,
+        player2: "N/A",
+      });
+      usedIds.add(player1.konamiId);
+    }
+  }
   return (
     <div className="relative overflow-x-auto bg-zinc-900 h-full w-full">
       <table className="w-full text-sm text-left rtl:text-right text-white dark:text-gray-400">
@@ -23,20 +62,16 @@ export const ListTournament = () => {
           </tr>
         </thead>
         <tbody>
-          {submittedForms.map((form: any, index: any): any => (
+          {pairs.map((pair) => (
             <tr
-              key={form.konamiId}
+              key={pair.mesa}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
             >
               <th scope="row" className="px-6 py-4">
-                {index + 1}
+                {pair.mesa}
               </th>
-              <td className="px-6 py-4">{form.name}</td>
-              <td className="px-6 py-4">
-                {index + 1 < submittedForms.length
-                  ? submittedForms[index + 1]?.name
-                  : "N/A"}
-              </td>
+              <td className="px-6 py-4">{pair.player1}</td>
+              <td className="px-6 py-4">{pair.player2}</td>
               <td className="px-6 py-4"></td>
             </tr>
           ))}
