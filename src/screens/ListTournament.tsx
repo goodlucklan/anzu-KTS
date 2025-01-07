@@ -42,6 +42,7 @@ export const ListTournament = () => {
       usedIds.add(player1.konamiId);
     }
   }
+
   return (
     <div className="relative overflow-x-auto bg-zinc-900 h-full w-full">
       <table className="w-full text-sm text-left rtl:text-right text-white dark:text-gray-400">
