@@ -1,79 +1,112 @@
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { useTournamentStore } from "../store/globalStore";
-
-type FormData = {
-  konamiId: string;
-  name: string;
-};
+import { useEffect, useState } from "react";
+import { searchPlayer } from "../helpers/search.player.ts";
 
 export const CreateTournament = () => {
   let navigate = useNavigate();
-  const { register, handleSubmit, reset } = useForm<FormData>();
-  const { submittedForms, addForm }: any = useTournamentStore();
+  const [namePlayer, setNamePlayer] = useState("");
+  const [listPlayers, setListPlayers] = useState([]);
 
-  const onSubmit = (form: FormData) => {
-    addForm(form);
-    reset();
-  };
+  useEffect(() => {}, [listPlayers]);
 
   return (
-    <div className="mt-12 align-middle">
-      <h1 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-950 text-center">
-        Enter the users
-      </h1>
-      <form className="max-w-sm mx-auto" onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-5">
-          <label
-            for="email"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-950"
-          >
-            Your konami ID
-          </label>
-          <input
-            {...register("konamiId")}
-            type="text"
-            id="konamiId"
-            className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="0410850488"
-            required
-          />
+    <div className="mt-12 w-full">
+      <div className="grid grid-cols-3 gap-3">
+        <div>
+          <div className="p-4">
+            <h1 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-950 text-center">
+              Enter the users
+            </h1>
+            <div className="mb-5">
+              <label
+                for="name"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-950"
+              >
+                Your name
+              </label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Luis Roman"
+                className="text-sm rounded-lg border block w-full p-2.5"
+                value={namePlayer}
+                onChange={(e: any) => setNamePlayer(e?.target?.value)}
+                required
+              />
+            </div>
+            <button
+              onClick={() => searchPlayer(namePlayer, setListPlayers)}
+              className="mb-5 bg-gray-700 hover:bg-gray-900 text-white font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+            >
+              Search
+            </button>
+            <button
+              type="button"
+              className="mb-5 bg-gray-700 hover:bg-gray-900 text-white font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+              // disabled={submittedForms.length < 5}
+              // className={`text-white bg-gray-600 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center ${
+              //   submittedForms.length < 5
+              //     ? "opacity-50 cursor-not-allowed"
+              //     : "dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              // }`}
+              onClick={() => navigate("/ListTournament")}
+            >
+              Send the Tournament
+            </button>
+          </div>
         </div>
-        <div className="mb-5">
-          <label
-            for="password"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-950"
-          >
-            Your name
-          </label>
-          <input
-            {...register("name")}
-            type="text"
-            id="name"
-            placeholder="Luis Roman"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required
-          />
+        <div>
+          <div className="p-4">
+            <h1 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-950 text-center">
+              Results
+            </h1>
+            <table className="table-fixed w-full mt-12">
+              <thead className="bg-gray-700 text-white">
+                <tr className="text-lg font-medium">
+                  <th>Player</th>
+                  <th>Konami Id</th>
+                </tr>
+              </thead>
+              <tbody className="text-center">
+                {listPlayers.map((valuePlayers: any) => (
+                  <tr key={valuePlayers.id}>
+                    <td class="px-4 py-2">{valuePlayers.name}</td>
+                    <td class="px-4 py-2">{valuePlayers.konamiid}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button className="mt-6 bg-gray-700 hover:bg-gray-900 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center w-64 align-middle">
+              Register
+            </button>
+          </div>
         </div>
-        <button
-          type="submit"
-          className="mb-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Submit
-        </button>
-        <button
-          type="button"
-          disabled={submittedForms.length < 5}
-          className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center ${
-            submittedForms.length < 5
-              ? "opacity-50 cursor-not-allowed"
-              : "dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          }`}
-          onClick={() => navigate("/ListTournament")}
-        >
-          Send the Tournament
-        </button>
-      </form>
+        <div>
+          <div className="p-4">
+            <h1 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-950 text-center">
+              List of players
+            </h1>
+            <table className="table-fixed w-full mt-12">
+              <thead className="bg-gray-700 text-white">
+                <tr>
+                  <th>Player</th>
+                  <th>Konami Id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-4 py-2">Santiago Sturmo</td>
+                  <td class="px-4 py-2">0410850489</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2">Carlos Rodriguez</td>
+                  <td class="px-4 py-2">0410850490</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

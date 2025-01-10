@@ -5,11 +5,12 @@
 html {
   width: 100%;
   height: 100%;
-  background-color: #fff7f7;
+  background-color: #fcfdff;
 }
-/* #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-} */
+input {
+  background-color: #cfd5e1;
+}
+
+table {
+  background-color: #cfd5e1;
+}
