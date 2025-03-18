@@ -11,8 +11,8 @@ export const CreateTournament = () => {
 
   return (
     <div className="mt-12 w-full">
-      <div className="grid grid-cols-3 gap-3">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full">
+        <div className="col-auto">
           <div className="p-4">
             <h1 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-950 text-center">
               Enter the users
@@ -55,7 +55,7 @@ export const CreateTournament = () => {
             </button>
           </div>
         </div>
-        <div>
+        <div className="col-auto">
           <div className="p-4">
             <h1 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-950 text-center">
               Results
@@ -81,7 +81,7 @@ export const CreateTournament = () => {
             </button>
           </div>
         </div>
-        <div>
+        <div className="col-auto">
           <div className="p-4">
             <h1 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-950 text-center">
               List of players

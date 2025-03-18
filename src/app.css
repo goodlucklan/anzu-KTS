@@ -14,3 +14,13 @@ input {
 table {
   background-color: #cfd5e1;
 }
+
+body {
+  overflow-x: hidden;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
