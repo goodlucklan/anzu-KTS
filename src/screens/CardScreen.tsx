@@ -1,8 +1,8 @@
 // src/screens/CardScreen.tsx
 import React, { useState, useEffect } from "react";
 import InfoCard from "../components/InfoCard";
-import Modal from "../components/ModalTournament"; // Importa el nuevo componente
-import { getAllTournaments } from "../helpers/Tournament.player";
+import Modal from "../components/ModalTournament";
+import { getAllTournaments } from "../helpers/tournament.player";
 
 interface CardData {
   id: number;
@@ -15,10 +15,10 @@ const CardScreen: React.FC = () => {
   const [cardsData, setCardsData] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado del modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTournament, setSelectedTournament] = useState<CardData | null>(
     null
-  ); // Torneo seleccionado
+  );
 
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -45,19 +45,16 @@ const CardScreen: React.FC = () => {
     fetchTournaments();
   }, []);
 
-  // Función para abrir el modal al hacer clic en una card
   const handleCardClick = (card: CardData) => {
     setSelectedTournament(card);
     setIsModalOpen(true);
   };
 
-  // Función para cerrar el modal
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedTournament(null);
   };
 
-  // Función para confirmar el registro
   const handleConfirm = () => {
     if (selectedTournament) {
       console.log(`Registrado en el torneo: ${selectedTournament.title}`);

@@ -11,6 +11,7 @@ const LoginForm: React.FC = () => {
     setFormData,
     setShowPassword,
     setIsLoading,
+    setUser,
   } = useAuthStore();
 
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const LoginForm: React.FC = () => {
     setIsLoading(true); // Mostrar loader
     try {
       const result = await authPlayer(formData.email, formData.password);
-      console.log("Auth result:", result);
+      setUser(result.user);
       navigate("/List");
     } catch (error) {
       console.error("Error en autenticación:", error);
