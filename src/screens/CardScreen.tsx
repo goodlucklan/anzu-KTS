@@ -2,7 +2,11 @@
 import React, { useState, useEffect } from "react";
 import InfoCard from "../components/InfoCard";
 import Modal from "../components/ModalTournament";
-import { getAllTournaments } from "../helpers/tournament.player";
+import {
+  getAllTournaments,
+  insertPlayerTournament,
+} from "../helpers/tournament.player";
+import { useAuthStore } from "../store/authStore";
 
 interface CardData {
   id: number;
@@ -19,6 +23,7 @@ const CardScreen: React.FC = () => {
   const [selectedTournament, setSelectedTournament] = useState<CardData | null>(
     null
   );
+  const { user } = useAuthStore();
 
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -55,19 +60,21 @@ const CardScreen: React.FC = () => {
     setSelectedTournament(null);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (selectedTournament) {
-      console.log(`Registrado en el torneo: ${selectedTournament.title}`);
-      // Aquí puedes agregar la lógica para registrar al usuario en el torneo
-      // Por ejemplo, una llamada a un endpoint con axios
+      await insertPlayerTournament({
+        konamiid: user?.konamiid,
+        name: user?.name,
+        idtournament: selectedTournament.id,
+      });
     }
     handleCloseModal();
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <p className="text-gray-800">Cargando torneos...</p>
+      <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
       </div>
     );
   }

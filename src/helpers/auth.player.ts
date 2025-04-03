@@ -10,7 +10,6 @@ export const authPlayer = async (email: string, password: string) => {
         password,
       }
     );
-    console.log("response", response.data);
     return response?.data;
   } catch (error) {
     throw new Error(error as string);
