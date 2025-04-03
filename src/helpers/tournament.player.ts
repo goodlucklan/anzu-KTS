@@ -16,9 +16,6 @@ export const insertPlayerTournament = async ({
   name,
   idtournament,
 }: any) => {
-  console.log("konamiid", konamiid);
-  console.log("name", name);
-  console.log("idtournament", idtournament);
   try {
     const response = await axios.post(
       `https://anzu-backend-kts.onrender.com/api/tournament/addPlayerInTournament`,
@@ -28,7 +25,6 @@ export const insertPlayerTournament = async ({
         idtournament,
       }
     );
-    console.log("response insertPlayerTournament", response.data);
     return response.data;
   } catch (error) {
     throw new Error(error as string);
