@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "axios": "^1.7.9",
     "components-to-storybook": "^1.0.1",
     "preact": "^10.25.2",
