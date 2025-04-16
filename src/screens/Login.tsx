@@ -22,6 +22,7 @@ const LoginForm: React.FC = () => {
     try {
       const result = await authPlayer(formData.email, formData.password);
       setUser(result.user);
+      localStorage.setItem("user", JSON.stringify(result.user));
       navigate("/List");
     } catch (error) {
       console.error("Error en autenticación:", error);
